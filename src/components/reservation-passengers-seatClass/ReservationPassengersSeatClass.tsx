@@ -34,7 +34,7 @@ export type FlightInfo = Flight & {
 // }
 
 interface Props {
-  flight: Flight;
+  flight: FlightInfo;
   passenger: PassengerData;
   selectedClass: SeatClass;
   onClassChange: (type: SeatClass) => void;
@@ -56,19 +56,24 @@ const ReservationPassengersSeatClass: React.FC<Props> = ({
     <div className="reservation-content">
       {/* Progress step header */}
       <div className="progress-step-header">
-        <div className="flight-information">
+        
+        <div className="flight-information p-4">
+            
           <div className="flight-info-box">
-            <div className="code">{flight}</div>
-            <div className="location">{flight.fromLocation}</div>
-          </div>
-          <div className="arrow-icon">
+            
+            <div className="code">{flight.departingIata}
+            <div className="arrow-icon ms-4">
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
               <path d="M6 16H26M26 16L19 9M26 16L19 23" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
+        </div>
+            <div className="location">{flight.departureAirportId}</div>
+          </div>
+       
           <div className="flight-info-box">
-            <div className="code">{flight.to}</div>
-            <div className="location">{flight.toLocation}</div>
+            <div className="code">{flight.arrivalIata}</div>
+            <div className="location">{flight.arrivalAirportId}</div>
           </div>
         </div>
 
@@ -78,7 +83,7 @@ const ReservationPassengersSeatClass: React.FC<Props> = ({
           </div>
           <div className="flight-info">
             <div className="time-data">{flight.departureTime}</div>
-            <div className="direction">{flight.departureLabel}</div>
+            <div className="direction">{flight.departingIata}</div>
           </div>
           <div className="flight-info-divider">
             <div className="divider"></div>
@@ -86,7 +91,7 @@ const ReservationPassengersSeatClass: React.FC<Props> = ({
           <div className="flight-info active">
             <div className="flight-info-inactive">
               <div className="time-data">{flight.arrivalTime}</div>
-              <div className="direction">{flight.arrivalLabel}</div>
+              <div className="direction">{flight.arrivalIata}</div>
             </div>
             <div className="active-chevron"></div>
           </div>
@@ -153,7 +158,7 @@ const ReservationPassengersSeatClass: React.FC<Props> = ({
             </div>
             <div className="passenger-data">
               <div className="label">Posto selezionato</div>
-              <div className="name">{passenger.seatNumber}</div>
+              <div className="name">{passenger.name}</div>
             </div>
           </div>
           <div className="button-row">

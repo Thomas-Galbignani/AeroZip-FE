@@ -25,7 +25,7 @@ const ReservationPassengersSeats: React.FC<ReservationPassengersSeatsProps> = ({
         'Complimentary snacks',
         'In-flight entertainment'
       ],
-      imageSrc: "/group-8-color.png"
+      imageSrc: "src/assets/Economy Seats.png"
     },
     {
       type: SeatClass.BUSINESS,
@@ -40,7 +40,7 @@ const ReservationPassengersSeats: React.FC<ReservationPassengersSeatsProps> = ({
         'Lie-flat seats',
         'Dedicated cabin crew'
       ],
-      imageSrc: "/group-8-color.png"
+      imageSrc: "src/assets/Business Seats.png"
     }
   ];
 
