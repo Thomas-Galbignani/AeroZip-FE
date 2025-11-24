@@ -8,8 +8,10 @@ import type { Flight } from '../../services/flightService';
 import { ReservationStep } from '../../models/reservation';
 import ReservationPassengersInfo from '../../components/reservation-passengers-info/ReservationPassengersInfo';
 import ReservationPassengersSeats from '../../components/reservation-passengers-seats/ReservationPassengersSeats';
+import type { SearchFlightsFormData } from '../../components/search-flights/SearchFlights';
+import type { FlightInfo } from '../../components/reservation-passengers-seatClass/ReservationPassengersSeatClass';
 
-interface PassengerData {
+export interface PassengerData {
   name: string;
   surname: string;
   birthDate: string;
@@ -18,7 +20,7 @@ interface PassengerData {
   baggageNumbers: number;
 }
 
-interface ReservationProps {}
+interface ReservationProps { }
 
 const Reservation: React.FC<ReservationProps> = () => {
   const navigate = useNavigate();
@@ -28,6 +30,7 @@ const Reservation: React.FC<ReservationProps> = () => {
   );
   const [passengerNumbers, setPassengerNumber] = useState<number>(0);
   const [departingFlight, setDepartingFlight] = useState<Flight | null>(null);
+  const [searchData, setSearchData] = useState<SearchFlightsFormData | null>(null);
 
   useEffect(() => {
     const pendingReservationData = reservationService.getPendingReservation();
@@ -36,6 +39,7 @@ const Reservation: React.FC<ReservationProps> = () => {
 
       setPassengerNumber(pendingReservationData.searchData.passengers);
       setDepartingFlight(pendingReservationData.departingFlight);
+      setSearchData(pendingReservationData.searchData);
     } else {
       navigate('/');
     }
@@ -60,6 +64,7 @@ const Reservation: React.FC<ReservationProps> = () => {
               passengers={passengers}
               setPassengers={setPassengers}
             ></ReservationPassengersInfo>
+            {/* TODO rework info */}
             <div>
               <SelectedFlights
                 departingFlight={departingFlight}
@@ -73,10 +78,16 @@ const Reservation: React.FC<ReservationProps> = () => {
 
       {reservationStep == ReservationStep.SEAT_SELECT && (
         <>
-          <ReservationPassengersSeats></ReservationPassengersSeats>
+          <ReservationPassengersSeats
+            departingFlightInfo={{ ...departingFlight, ...{ departingIata: searchData?.departureAirport?.value, arrivalIata: searchData?.arrivalAirport?.value } } as FlightInfo}
+            passengersInfo={passengers}
+          >
+
+          </ReservationPassengersSeats>
         </>
-      )}
-    </div>
+      )
+      }
+    </div >
   );
 };
 

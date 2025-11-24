@@ -1,9 +1,71 @@
-interface ReservationPassengersSeatsProps {}
+import { useState } from "react";
+import type { FlightInfo } from "../reservation-passengers-seatClass/ReservationPassengersSeatClass";
+import type { PassengerData } from "../reservation-passengers-info/ReservationPassengersInfo";
+import ReservationPassengersSeatClass from "../reservation-passengers-seatClass/ReservationPassengersSeatClass";
+import { SeatClass } from "../../models/seatClass";
 
-const ReservationPassengersSeats: React.FC <ReservationPassengersSeatsProps> = () => {
+interface ReservationPassengersSeatsProps {
+  departingFlightInfo: FlightInfo;
+  returningFlightInfo?: FlightInfo;
+  passengersInfo: PassengerData[];
+}
+
+const ReservationPassengersSeats: React.FC<ReservationPassengersSeatsProps> = ({ departingFlightInfo, returningFlightInfo = null, passengersInfo }) => {
+
+  const [selectedClass, setSelectedClass] = useState<SeatClass>(SeatClass.ECONOMY);
+
+  const seatOptions = [
+    {
+      type: SeatClass.ECONOMY,
+      title: 'Economy',
+      badge: 'Selected',
+      description: 'Standard comfort with essential amenities for your journey',
+      features: [
+        'Standard seat pitch',
+        'Complimentary snacks',
+        'In-flight entertainment'
+      ],
+      imageSrc: "src/assets/Economy Seats.png"
+    },
+    {
+      type: SeatClass.BUSINESS,
+      title: 'Business Class',
+      badge: 'Selected',
+      description: 'Premium experience with enhanced comfort and service',
+      features: [
+        'Extra legroom',
+        'Priority boarding',
+        'Premium meals',
+        'Lounge access',
+        'Lie-flat seats',
+        'Dedicated cabin crew'
+      ],
+      imageSrc: "src/assets/Business Seats.png"
+    }
+  ];
+
+  const handleClassChange = (newSelectedClass: SeatClass) => {
+    setSelectedClass(newSelectedClass);
+  }
+
+  const handleSaveClick = () => {
+    console.log("save click");
+  }
+
+  const handleNextClick = () => {
+    console.log("next click");
+  }
+
   return (
     <div>
       <h1>ReservationPassengersSeats</h1>
+      <ReservationPassengersSeatClass
+        flight={departingFlightInfo}
+        passenger={passengersInfo[0]}
+        selectedClass={selectedClass}
+        onClassChange={handleClassChange}
+        onSave={handleSaveClick} onNext={handleNextClick}
+        seatOptions={seatOptions}></ReservationPassengersSeatClass>
     </div>
   );
 };
