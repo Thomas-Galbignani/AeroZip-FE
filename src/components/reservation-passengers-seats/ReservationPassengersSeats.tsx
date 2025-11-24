@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SeatsAirplane from "./seats-airplane/SeatsAirplane";
 import type { FlightInfo } from "../reservation-passengers-seatClass/ReservationPassengersSeatClass";
 import type { PassengerData } from "../reservation-passengers-info/ReservationPassengersInfo";
 import ReservationPassengersSeatClass from "../reservation-passengers-seatClass/ReservationPassengersSeatClass";
@@ -10,39 +11,42 @@ interface ReservationPassengersSeatsProps {
   passengersInfo: PassengerData[];
 }
 
+interface ReservationPassengersSeatsProps { }
+
+const availableSeats = ["A1", "B1", "B2", "A7", "B7", "D7", "E7"];
+const seatOptions = [
+  {
+    type: SeatClass.ECONOMY,
+    title: 'Economy',
+    badge: 'Selected',
+    description: 'Standard comfort with essential amenities for your journey',
+    features: [
+      'Standard seat pitch',
+      'Complimentary snacks',
+      'In-flight entertainment'
+    ],
+    imageSrc: "src/assets/Economy Seats.png"
+  },
+  {
+    type: SeatClass.BUSINESS,
+    title: 'Business Class',
+    badge: 'Selected',
+    description: 'Premium experience with enhanced comfort and service',
+    features: [
+      'Extra legroom',
+      'Priority boarding',
+      'Premium meals',
+      'Lounge access',
+      'Lie-flat seats',
+      'Dedicated cabin crew'
+    ],
+    imageSrc: "src/assets/Business Seats.png"
+  }
+];
+
 const ReservationPassengersSeats: React.FC<ReservationPassengersSeatsProps> = ({ departingFlightInfo, returningFlightInfo = null, passengersInfo }) => {
-
   const [selectedClass, setSelectedClass] = useState<SeatClass>(SeatClass.ECONOMY);
-
-  const seatOptions = [
-    {
-      type: SeatClass.ECONOMY,
-      title: 'Economy',
-      badge: 'Selected',
-      description: 'Standard comfort with essential amenities for your journey',
-      features: [
-        'Standard seat pitch',
-        'Complimentary snacks',
-        'In-flight entertainment'
-      ],
-      imageSrc: "src/assets/Economy Seats.png"
-    },
-    {
-      type: SeatClass.BUSINESS,
-      title: 'Business Class',
-      badge: 'Selected',
-      description: 'Premium experience with enhanced comfort and service',
-      features: [
-        'Extra legroom',
-        'Priority boarding',
-        'Premium meals',
-        'Lounge access',
-        'Lie-flat seats',
-        'Dedicated cabin crew'
-      ],
-      imageSrc: "src/assets/Business Seats.png"
-    }
-  ];
+  const [selectedSeat, setSelectedSeat] = useState<string>("");
 
   const handleClassChange = (newSelectedClass: SeatClass) => {
     setSelectedClass(newSelectedClass);
@@ -57,8 +61,8 @@ const ReservationPassengersSeats: React.FC<ReservationPassengersSeatsProps> = ({
   }
 
   return (
-    <div>
-      <h1>ReservationPassengersSeats</h1>
+    <div className="d-flex">
+      <SeatsAirplane availableSeats={availableSeats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat} selectedClass={selectedClass}></SeatsAirplane>
       <ReservationPassengersSeatClass
         flight={departingFlightInfo}
         passenger={passengersInfo[0]}
