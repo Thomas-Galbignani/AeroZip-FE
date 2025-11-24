@@ -13,7 +13,7 @@ interface SeatOption {
 }
 export type FlightInfo = Flight & {
     departingIata: string;
-    returningIata: string;
+    arrivalIata: string;
 
 }
 
