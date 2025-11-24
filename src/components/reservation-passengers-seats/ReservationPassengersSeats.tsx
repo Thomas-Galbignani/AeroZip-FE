@@ -61,8 +61,8 @@ const ReservationPassengersSeats: React.FC<ReservationPassengersSeatsProps> = ({
   }
 
   return (
-    <div>
-      <SeatsAirplane availableSeats={availableSeats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat} selectedClass={'ECONOMY'}></SeatsAirplane>
+    <div className="d-flex">
+      <SeatsAirplane availableSeats={availableSeats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat} selectedClass={selectedClass}></SeatsAirplane>
       <ReservationPassengersSeatClass
         flight={departingFlightInfo}
         passenger={passengersInfo[0]}

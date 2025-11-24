@@ -1,3 +1,4 @@
+import { SeatClass } from "../../../models/seatClass";
 import "./SeatsAirplane.scss";
 
 interface SeatsOptions {
@@ -37,7 +38,7 @@ const seatsOptions: SeatsOptions = {
 interface SeatsAirplaneProps {
     availableSeats: string[],
     selectedSeat: string;
-    selectedClass: string;
+    selectedClass: SeatClass;
     setSelectedSeat: (selectedSeat: string) => void;
 }
 
@@ -81,10 +82,10 @@ const SeatsAirplane: React.FC<SeatsAirplaneProps> = ({ availableSeats, selectedS
                         return <rect
                             key={seat}
                             className={'seats-airplane__seat' +
-                                (available && selectedClass == 'BUSINESS' ? ' seats-airplane__seat__first-class--available' : '') +
+                                (available && selectedClass === SeatClass.BUSINESS ? ' seats-airplane__seat__first-class--available' : '') +
                                 (selectedSeat === seat ? ' seats-airplane__seat--selected' : '')
                             }
-                            onClick={() => available && selectedClass == 'BUSINESS' && handleRectClick(seat)}
+                            onClick={() => available && selectedClass === SeatClass.BUSINESS && handleRectClick(seat)}
                             x={x}
                             y={y}
                             width="30"
@@ -108,10 +109,10 @@ const SeatsAirplane: React.FC<SeatsAirplaneProps> = ({ availableSeats, selectedS
                         return <rect
                             key={seat}
                             className={'seats-airplane__seat' +
-                                (available && selectedClass == 'ECONOMY' ? ' seats-airplane__seat__standard-class--available' : '') +
+                                (available && selectedClass === SeatClass.ECONOMY ? ' seats-airplane__seat__standard-class--available' : '') +
                                 (selectedSeat === seat ? ' seats-airplane__seat--selected' : '')
                             }
-                            onClick={() => available && selectedClass == 'ECONOMY' && handleRectClick(seat)}
+                            onClick={() => available && selectedClass === SeatClass.ECONOMY && handleRectClick(seat)}
                             x={x}
                             y={y}
                             width="22"
