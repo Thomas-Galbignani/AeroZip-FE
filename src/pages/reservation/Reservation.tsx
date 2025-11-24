@@ -9,7 +9,7 @@ import { ReservationStep } from '../../models/reservation';
 import ReservationPassengersInfo from '../../components/reservation-passengers-info/ReservationPassengersInfo';
 import ReservationPassengersSeats from '../../components/reservation-passengers-seats/ReservationPassengersSeats';
 
-interface PassengerData {
+export interface PassengerData {
   name: string;
   surname: string;
   birthDate: string;
@@ -60,6 +60,7 @@ const Reservation: React.FC<ReservationProps> = () => {
               passengers={passengers}
               setPassengers={setPassengers}
             ></ReservationPassengersInfo>
+            {/* TODO rework info */}
             <div>
               <SelectedFlights
                 departingFlight={departingFlight}
@@ -73,7 +74,12 @@ const Reservation: React.FC<ReservationProps> = () => {
 
       {reservationStep == ReservationStep.SEAT_SELECT && (
         <>
-          <ReservationPassengersSeats></ReservationPassengersSeats>
+          <ReservationPassengersSeats
+          departingFlightInfo={{...departingFlightInfo,{departingIata:, returningIata}}}
+          
+          >
+            
+          </ReservationPassengersSeats>
         </>
       )}
     </div>

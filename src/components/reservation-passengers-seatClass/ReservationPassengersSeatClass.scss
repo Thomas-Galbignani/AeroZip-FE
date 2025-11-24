@@ -1,0 +1,624 @@
+.reservation-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0;
+    width: 712px;
+    height: 838px;
+    font-family: 'Nunito Sans', sans-serif;
+  
+    // Progress step header
+    .progress-step-header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0;
+      width: 712px;
+      height: 88px;
+      background: get-color("grey-900");
+      flex: none;
+      order: 0;
+      align-self: stretch;
+      flex-grow: 0;
+  
+      .flight-information {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 0;
+        margin: 0 auto;
+        width: 290px;
+        height: 88px;
+        flex: none;
+        order: 0;
+        flex-grow: 0;
+  
+        .flight-info-box {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 20px 24px;
+          width: 129px;
+          height: 88px;
+          background: get-color("grey-900");
+          flex: none;
+          flex-grow: 0;
+  
+          .code {
+            width: 87px;
+            height: 33px;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 24px;
+            line-height: 33px;
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            color: get-color("grey-100");
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+          }
+  
+          .location {
+            width: 87px;
+            height: 16px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            color: get-color("purple-extra-light");
+            flex: none;
+            order: 1;
+            flex-grow: 0;
+          }
+        }
+  
+        .arrow-icon {
+          width: 32px;
+          height: 32px;
+          border-radius: 4px;
+          flex: none;
+          order: 1;
+          flex-grow: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+  
+      .progress-step {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0;
+        margin: 0 auto;
+        width: 422px;
+        height: 88px;
+        flex: none;
+        order: 1;
+        flex-grow: 0;
+  
+        .flight-info-divider {
+          width: 1px;
+          height: 88px;
+          background: get-color("grey-900");
+          flex: none;
+          flex-grow: 0;
+          position: relative;
+  
+          .divider {
+            position: absolute;
+            width: 1px;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background: get-color("grey-2"); // Sostituisce $grey-600
+          }
+        }
+  
+        .flight-info {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          padding: 20px 24px;
+          gap: 4px;
+          width: 210px;
+          height: 88px;
+          background: get-color("grey-900");
+          flex: none;
+          flex-grow: 0;
+  
+          .time-data {
+            width: 162px;
+            height: 22px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+            display: flex;
+            align-items: center;
+            color: get-color("true-white");
+            flex: none;
+            order: 0;
+            align-self: stretch;
+            flex-grow: 0;
+          }
+  
+          .direction {
+            width: 162px;
+            height: 16px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 16px;
+            display: flex;
+            align-items: center;
+            color: get-color("purple-extra-light");
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+          }
+  
+          &.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+            width: 210px;
+            height: 88px;
+            position: relative;
+  
+            .flight-info-inactive {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: flex-start;
+              padding: 20px 24px;
+              gap: 4px;
+              width: 210px;
+              height: 88px;
+              background: get-color("purple-blue");
+              flex: none;
+              order: 0;
+              align-self: stretch;
+              flex-grow: 0;
+  
+              .time-data, .direction {
+                color: get-color("true-white");
+              }
+  
+              .direction {
+                color: get-color("purple-extra-light");
+              }
+            }
+  
+            .active-chevron {
+              position: absolute;
+              width: 20px;
+              height: 8px;
+              left: calc(50% - 10px);
+              bottom: 0;
+              background: get-color("grey-100");
+            }
+          }
+        }
+      }
+    }
+  
+    // Feature lists
+    .feature-lists {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 8px 16px;
+      gap: 4px;
+      width: 712px;
+      height: 653px;
+      backdrop-filter: blur(12px);
+      flex: none;
+      order: 1;
+      align-self: stretch;
+      flex-grow: 1;
+  
+      .feature-list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 32px 8px;
+        gap: 16px;
+        width: 336px;
+        border-radius: 8px;
+        flex: none;
+        flex-grow: 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+  
+        &:hover {
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+  
+        &.economy {
+          height: 498px;
+          order: 0;
+        }
+  
+        &.business {
+          height: 629px;
+          order: 1;
+        }
+  
+        .seat-image {
+          width: 320px;
+          height: 180px;
+          flex: none;
+          order: 0;
+          flex-grow: 0;
+          object-fit: contain;
+        }
+  
+        .feature-list-content {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 0;
+          gap: 16px;
+          width: 272px;
+          flex: none;
+          order: 1;
+          flex-grow: 0;
+  
+          .header-and-badge {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 0;
+            gap: 16px;
+            height: 25px;
+            flex: none;
+            order: 0;
+            flex-grow: 0;
+  
+            .header {
+              height: 25px;
+              font-style: normal;
+              font-weight: 600;
+              font-size: 18px;
+              line-height: 25px;
+              display: flex;
+              align-items: center;
+              color: get-color("grey-2"); // Sostituisce $grey-600
+              flex: none;
+              order: 0;
+              align-self: stretch;
+              flex-grow: 0;
+            }
+  
+            .badge-selected {
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              padding: 2px 6px;
+              gap: 10px;
+              height: 22px;
+              border-radius: 4px;
+              flex: none;
+              order: 1;
+              flex-grow: 0;
+  
+              .label {
+                height: 18px;
+                font-style: normal;
+                font-weight: 700;
+                font-size: 14px;
+                line-height: 18px;
+                display: flex;
+                align-items: center;
+                color: get-color("true-white");
+                flex: none;
+                order: 0;
+                flex-grow: 0;
+              }
+            }
+          }
+  
+          .description {
+            width: 272px;
+            height: 57px;
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 19px;
+            color: get-color("grey-400");
+            flex: none;
+            order: 1;
+            align-self: stretch;
+            flex-grow: 0;
+          }
+  
+          .divider-thick {
+            width: 32px;
+            height: 4px;
+            opacity: 0.5;
+            flex: none;
+            order: 2;
+            flex-grow: 0;
+          }
+  
+          .feature-list-bullet {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 0 4px;
+            gap: 12px;
+            width: 272px;
+            height: 24px;
+            flex: none;
+            align-self: stretch;
+            flex-grow: 0;
+  
+            &:nth-child(9) {
+              height: 38px;
+            }
+  
+            .point-icon {
+              width: 24px;
+              height: 24px;
+              flex: none;
+              order: 0;
+              flex-grow: 0;
+              position: relative;
+  
+              .ellipse {
+                position: absolute;
+                width: 10px;
+                height: 10px;
+                left: 7px;
+                top: 7px;
+                border-radius: 50%;
+              }
+            }
+  
+            .bullet-text {
+              width: 228px;
+              height: 19px;
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 19px;
+              display: flex;
+              align-items: center;
+              color: get-color("grey-2"); // Sostituisce $grey-600
+              flex: none;
+              order: 1;
+              flex-grow: 1;
+            }
+          }
+        }
+  
+        &.economy {
+          .badge-selected {
+            background: get-color("purple-blue-gradient"); // Sostituisce il gradiente complesso
+          }
+  
+          .divider-thick {
+            background: get-color("purple-blue");
+          }
+  
+          .point-icon .ellipse {
+            background: get-color("purple-blue");
+          }
+        }
+  
+        &.business {
+          .badge-selected {
+            background: get-color("turquoise-gradient"); // Sostituisce il gradiente complesso
+          }
+  
+          .divider-thick {
+            background: get-color("turquoise");
+          }
+  
+          .point-icon .ellipse {
+            // Non definito nell'originale per business, lo lascio vuoto o potrei mettere turquoise
+            background: get-color("turquoise"); // Aggiunto per consistenza con .economy
+          }
+        }
+      }
+    }
+  
+    // Navigation footer
+    .navigation-footer {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0;
+      width: 712px;
+      height: 97px;
+      background: get-color("purple-white-light");
+      flex: none;
+      order: 2;
+      align-self: stretch;
+      flex-grow: 0;
+  
+      .seat-selection-divider {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+        gap: 10px;
+        width: 712px;
+        height: 1px;
+        flex: none;
+        order: 0;
+        align-self: stretch;
+        flex-grow: 0;
+  
+        .divider {
+          width: 712px;
+          height: 1px;
+          background: get-color("purple-light"); // Sostituisce $grey-200
+          flex: none;
+          order: 0;
+          align-self: stretch;
+          flex-grow: 0;
+        }
+      }
+  
+      .content {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 16px 24px;
+        gap: 16px;
+        width: 712px;
+        height: 96px;
+        flex: none;
+        order: 1;
+        align-self: stretch;
+        flex-grow: 0;
+  
+        .user-selections {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          padding: 0;
+          gap: 16px;
+          width: 367px;
+          height: 64px;
+          flex: none;
+          order: 0;
+          flex-grow: 1;
+  
+          .passenger-data {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 8px;
+            gap: 4px;
+            height: 64px;
+            flex: none;
+            flex-grow: 0;
+  
+            &:first-child {
+              width: 176px;
+              order: 0;
+            }
+  
+            &:last-child {
+              width: 175px;
+              order: 1;
+              flex-grow: 1;
+            }
+  
+            .label {
+              height: 19px;
+              font-style: normal;
+              font-weight: 400;
+              font-size: 14px;
+              line-height: 19px;
+              display: flex;
+              align-items: center;
+              color: get-color("grey-400");
+              flex: none;
+              order: 0;
+              flex-grow: 0;
+            }
+  
+            .name {
+              height: 25px;
+              font-style: normal;
+              font-weight: 600;
+              font-size: 18px;
+              line-height: 25px;
+              display: flex;
+              align-items: center;
+              color: get-color("grey-2"); // Sostituisce $grey-600
+              flex: none;
+              order: 1;
+              flex-grow: 0;
+            }
+          }
+        }
+  
+        .button-row {
+          display: flex;
+          flex-direction: row;
+          align-items: flex-start;
+          padding: 0;
+          gap: 16px;
+          width: 281px;
+          height: 48px;
+          flex: none;
+          order: 1;
+          flex-grow: 0;
+  
+          button {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: 12px 20px;
+            gap: 8px;
+            height: 48px;
+            border-radius: 4px;
+            flex: none;
+            flex-grow: 0;
+            cursor: pointer;
+            transition: all 0.2s ease;
+  
+            .label {
+              height: 22px;
+              font-style: normal;
+              font-weight: 400;
+              font-size: 16px;
+              line-height: 22px;
+              display: flex;
+              align-items: center;
+              flex: none;
+              order: 0;
+              flex-grow: 0;
+            }
+  
+            &.btn-save {
+              width: 148px;
+              order: 0;
+              background: transparent;
+              border: 1px solid get-color("purple-blue");
+  
+              .label {
+                width: 108px;
+                color: get-color("purple-blue");
+              }
+  
+              &:hover {
+                background: rgba(get-color("purple-blue"), 0.05);
+              }
+            }
+  
+            &.btn-next {
+              width: 117px;
+              order: 1;
+              background: rgba(get-color("purple-light"), 0.3); // Sostituisce rgba($grey-200, 0.3)
+              border: 1px solid get-color("grey-400");
+  
+              .label {
+                width: 77px;
+                color: get-color("grey-400");
+              }
+  
+              &:hover {
+                background: rgba(get-color("purple-light"), 0.5); // Sostituisce rgba($grey-200, 0.5)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
