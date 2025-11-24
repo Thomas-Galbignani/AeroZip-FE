@@ -1,9 +1,16 @@
-interface ReservationPassengersSeatsProps {}
+import { useState } from "react";
+import SeatsAirplane from "./seats-airplane/SeatsAirplane";
 
-const ReservationPassengersSeats: React.FC <ReservationPassengersSeatsProps> = () => {
+interface ReservationPassengersSeatsProps { }
+
+const availableSeats = ["A1", "B1", "B2", "A7", "B7", "D7", "E7"];
+
+const ReservationPassengersSeats: React.FC<ReservationPassengersSeatsProps> = () => {
+  const [selectedSeat, setSelectedSeat] = useState<string>("");
+
   return (
     <div>
-      <h1>ReservationPassengersSeats</h1>
+      <SeatsAirplane availableSeats={availableSeats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat} selectedClass={'ECONOMY'}></SeatsAirplane>
     </div>
   );
 };
