@@ -1,30 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getUserData } from "../../services/userService";
 
-interface User {
-  nome: string;
-  cognome: string;
+export interface User {
+  id: string
+  name: string;
+  surname: string;
   email: string;
-  telefono: string;
+  phone: string;
 }
 
-interface ProfileProps {
-  user?: User;
-}
+interface ProfileProps { }
 
-const Profile: React.FC<ProfileProps> = ({ 
-  user = {
-    nome: 'Mario',
-    cognome: 'Rossi',
-    email: 'mario.rossi@example.com',
-    telefono: '+39 333 1234567'
-  }
-}) => {
+const Profile: React.FC<ProfileProps> = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [formData, setFormData] = useState(user);
+  const [formData, setFormData] = useState<User>({
+    id: '',
+    name: '',
+    surname: '',
+    email: '',
+    phone: ''
+  });
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
+  const [user, setUser] = useState<User | null>(null);
+
+
+  const loadUserData = async () => {
+    const user = await getUserData();
+    if (user) {
+      setUser(user);
+      setFormData(user);
+    }
+  }
+
+  useEffect(() => {
+    loadUserData();
+  }, []);
 
   const handleSave = () => {
     console.log('Dati salvati:', formData);
@@ -51,11 +65,11 @@ const Profile: React.FC<ProfileProps> = ({
     return (
       <div style={{ maxWidth: '500px', margin: '50px auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
         <h2>Modifica Password</h2>
-        
+
         <div style={{ marginBottom: '15px' }}>
           <label style={{ display: 'block', marginBottom: '5px' }}>Nuova Password:</label>
-          <input 
-            type="password" 
+          <input
+            type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
@@ -64,8 +78,8 @@ const Profile: React.FC<ProfileProps> = ({
 
         <div style={{ marginBottom: '15px' }}>
           <label style={{ display: 'block', marginBottom: '5px' }}>Conferma Password:</label>
-          <input 
-            type="password" 
+          <input
+            type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
@@ -106,43 +120,43 @@ const Profile: React.FC<ProfileProps> = ({
     return (
       <div style={{ maxWidth: '500px', margin: '50px auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
         <h2>Modifica Profilo</h2>
-        
+
         <div style={{ marginBottom: '15px' }}>
           <label style={{ display: 'block', marginBottom: '5px' }}>Nome:</label>
-          <input 
-            type="text" 
-            value={formData.nome}
-            onChange={(e) => setFormData({...formData, nome: e.target.value})}
+          <input
+            type="text"
+            value={formData?.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
           />
         </div>
 
         <div style={{ marginBottom: '15px' }}>
           <label style={{ display: 'block', marginBottom: '5px' }}>Cognome:</label>
-          <input 
-            type="text" 
-            value={formData.cognome}
-            onChange={(e) => setFormData({...formData, cognome: e.target.value})}
+          <input
+            type="text"
+            value={formData.surname}
+            onChange={(e) => setFormData({ ...formData, surname: e.target.value })}
             style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
           />
         </div>
 
         <div style={{ marginBottom: '15px' }}>
           <label style={{ display: 'block', marginBottom: '5px' }}>Email:</label>
-          <input 
-            type="email" 
+          <input
+            type="email"
             value={formData.email}
-            onChange={(e) => setFormData({...formData, email: e.target.value})}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
             style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
           />
         </div>
 
         <div style={{ marginBottom: '15px' }}>
           <label style={{ display: 'block', marginBottom: '5px' }}>Telefono:</label>
-          <input 
-            type="tel" 
-            value={formData.telefono}
-            onChange={(e) => setFormData({...formData, telefono: e.target.value})}
+          <input
+            type="tel"
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
             style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
           />
         </div>
@@ -162,21 +176,21 @@ const Profile: React.FC<ProfileProps> = ({
   return (
     <div style={{ maxWidth: '500px', margin: '50px auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
       <h2>Il Mio Profilo</h2>
-      
+
       <div style={{ marginBottom: '15px' }}>
-        <strong>Nome:</strong> {user.nome}
+        <strong>Nome:</strong> {user?.name}
       </div>
-      
+
       <div style={{ marginBottom: '15px' }}>
-        <strong>Cognome:</strong> {user.cognome}
+        <strong>Cognome:</strong> {user?.surname}
       </div>
-      
+
       <div style={{ marginBottom: '15px' }}>
-        <strong>Email:</strong> {user.email}
+        <strong>Email:</strong> {user?.email}
       </div>
-      
+
       <div style={{ marginBottom: '20px' }}>
-        <strong>Telefono:</strong> {user.telefono}
+        <strong>Telefono:</strong> {user?.phone}
       </div>
 
       <div style={{ display: 'flex', gap: '10px' }}>
