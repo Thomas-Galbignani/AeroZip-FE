@@ -1,9 +1,14 @@
 import { API_BASE_URL } from "../constants"
 import type { User } from "../pages/profile/Profile";
+import { authService } from "./authService";
 
 export const getUserData = async () => {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/users/me`);
+        const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+            headers: new Headers({
+                'Authorization': `Bearer ${authService.getToken()}`
+            })
+        });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
