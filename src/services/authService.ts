@@ -22,9 +22,9 @@ export interface LoginRequest {
 }
 
 export interface RegistrationRequest {
-  nome: string;
-  cognome: string;
-  cellulare: string;
+  name: string;
+  surname: string;
+  phone: string;
   email: string;
   password: string;
 }

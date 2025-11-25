@@ -1,9 +1,9 @@
-import { useState } from "react";
-import SeatsAirplane from "./seats-airplane/SeatsAirplane";
-import type { FlightInfo } from "../reservation-passengers-seatClass/ReservationPassengersSeatClass";
-import type { PassengerData } from "../reservation-passengers-info/ReservationPassengersInfo";
-import ReservationPassengersSeatClass from "../reservation-passengers-seatClass/ReservationPassengersSeatClass";
-import { SeatClass } from "../../models/seatClass";
+import { useState } from 'react';
+import SeatsAirplane from './seats-airplane/SeatsAirplane';
+import type { FlightInfo } from '../reservation-passengers-seatClass/ReservationPassengersSeatClass';
+import type { PassengerData } from '../reservation-passengers-info/ReservationPassengersInfo';
+import ReservationPassengersSeatClass from '../reservation-passengers-seatClass/ReservationPassengersSeatClass';
+import { SeatClass } from '../../models/seatClass';
 
 interface ReservationPassengersSeatsProps {
   departingFlightInfo: FlightInfo;
@@ -11,9 +11,20 @@ interface ReservationPassengersSeatsProps {
   passengersInfo: PassengerData[];
 }
 
-interface ReservationPassengersSeatsProps { }
+interface SelectedSeats {
+  departure: {
+    seat: string;
+    seatClass: string;
+  };
+  returning?: {
+    seat: string;
+    seatClass: string;
+  };
+}
 
-const availableSeats = ["A1", "B1", "B2", "A7", "B7", "D7", "E7"];
+interface ReservationPassengersSeatsProps {}
+
+const availableSeats = ['A1', 'B1', 'B2', 'A7', 'B7', 'D7', 'E7', 'D14'];
 const seatOptions = [
   {
     type: SeatClass.ECONOMY,
@@ -23,9 +34,9 @@ const seatOptions = [
     features: [
       'Standard seat pitch',
       'Complimentary snacks',
-      'In-flight entertainment'
+      'In-flight entertainment',
     ],
-    imageSrc: "src/assets/Economy Seats.png"
+    imageSrc: 'src/assets/Economy Seats.png',
   },
   {
     type: SeatClass.BUSINESS,
@@ -38,38 +49,98 @@ const seatOptions = [
       'Premium meals',
       'Lounge access',
       'Lie-flat seats',
-      'Dedicated cabin crew'
+      'Dedicated cabin crew',
     ],
-    imageSrc: "src/assets/Business Seats.png"
-  }
+    imageSrc: 'src/assets/Business Seats.png',
+  },
 ];
 
-const ReservationPassengersSeats: React.FC<ReservationPassengersSeatsProps> = ({ departingFlightInfo, returningFlightInfo = null, passengersInfo }) => {
-  const [selectedClass, setSelectedClass] = useState<SeatClass>(SeatClass.ECONOMY);
-  const [selectedSeat, setSelectedSeat] = useState<string>("");
+const ReservationPassengersSeats: React.FC<ReservationPassengersSeatsProps> = ({
+  departingFlightInfo,
+  returningFlightInfo = null,
+  passengersInfo,
+}) => {
+  const [selectedClass, setSelectedClass] = useState<SeatClass>(
+    SeatClass.ECONOMY
+  );
+  const [selectedSeat, setSelectedSeat] = useState<string>('');
+
+  const [passengerIndex, setPassengerIndex] = useState<number>(0);
+  const [selectedSeats, setSelectedSeats] = useState<SelectedSeats[]>([]);
+  const [selectedFlight, setSelectedFlight] =
+    useState<FlightInfo>(departingFlightInfo);
+  const [isDepartingFlightSelection, setIsDepartingFlightSelection] =
+    useState<boolean>(true);
 
   const handleClassChange = (newSelectedClass: SeatClass) => {
     setSelectedClass(newSelectedClass);
-  }
-
-  const handleSaveClick = () => {
-    console.log("save click");
-  }
+  };
 
   const handleNextClick = () => {
-    console.log("next click");
-  }
+    const tempSelectedSeats = selectedSeats;
+
+    if (!tempSelectedSeats.length) {
+      tempSelectedSeats.push({
+        departure: {
+          seat: selectedSeat,
+          seatClass: selectedClass,
+        },
+      });
+    } else {
+      if (tempSelectedSeats[passengerIndex]?.departure) {
+        tempSelectedSeats[passengerIndex].returning = {
+          seat: selectedSeat,
+          seatClass: selectedClass,
+        };
+      } else {
+        tempSelectedSeats.push({
+          departure: {
+            seat: selectedSeat,
+            seatClass: selectedClass,
+          },
+        });
+      }
+    }
+
+    if (tempSelectedSeats[passengerIndex]?.returning) {
+      setPassengerIndex(pi => ++pi);
+      setSelectedFlight(departingFlightInfo);
+      setIsDepartingFlightSelection(true);
+    } else {
+      if (returningFlightInfo) {
+        setSelectedFlight(returningFlightInfo);
+        setIsDepartingFlightSelection(false);
+      } else {
+        setPassengerIndex(pi => ++pi);
+      }
+    }
+
+    setSelectedSeat('');
+    console.log('next click', tempSelectedSeats);
+    setSelectedSeats(tempSelectedSeats);
+  };
 
   return (
     <div className="d-flex">
-      <SeatsAirplane availableSeats={availableSeats} selectedSeat={selectedSeat} setSelectedSeat={setSelectedSeat} selectedClass={selectedClass}></SeatsAirplane>
+      <SeatsAirplane
+        availableSeats={availableSeats}
+        selectedSeat={selectedSeat}
+        setSelectedSeat={setSelectedSeat}
+        selectedClass={selectedClass}
+      ></SeatsAirplane>
       <ReservationPassengersSeatClass
-        flight={departingFlightInfo}
-        passenger={passengersInfo[0]}
+        flight={selectedFlight}
+        passenger={passengersInfo[passengerIndex]}
         selectedClass={selectedClass}
         onClassChange={handleClassChange}
-        onSave={handleSaveClick} onNext={handleNextClick}
-        seatOptions={seatOptions}></ReservationPassengersSeatClass>
+        onNext={handleNextClick}
+        seatOptions={seatOptions}
+        selectedSeat={selectedSeat}
+        hasReturningFlight={!!returningFlightInfo}
+        isDepartingFlightSelection={isDepartingFlightSelection}
+        departureDepartureDate={departingFlightInfo.departureTime}
+        returningDepartureDate={returningFlightInfo?.departureTime ?? ''}
+      ></ReservationPassengersSeatClass>
     </div>
   );
 };

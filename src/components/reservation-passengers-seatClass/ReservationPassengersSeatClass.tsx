@@ -12,10 +12,11 @@ interface SeatOption {
   features: string[];
 }
 export type FlightInfo = Flight & {
-    departingIata: string;
-    arrivalIata: string;
-
-}
+  departingIata: string;
+  departingAirportName: string;
+  arrivalIata: string;
+  arrivalAirportName: string;
+};
 
 // interface FlightInfo {
 //   from: string;
@@ -38,9 +39,13 @@ interface Props {
   passenger: PassengerData;
   selectedClass: SeatClass;
   onClassChange: (type: SeatClass) => void;
-  onSave: () => void;
   onNext: () => void;
   seatOptions: SeatOption[];
+  selectedSeat: string;
+  hasReturningFlight: boolean;
+  isDepartingFlightSelection: boolean;
+  departureDepartureDate: string;
+  returningDepartureDate: string;
 }
 
 const ReservationPassengersSeatClass: React.FC<Props> = ({
@@ -48,32 +53,40 @@ const ReservationPassengersSeatClass: React.FC<Props> = ({
   passenger,
   selectedClass,
   onClassChange,
-  onSave,
   onNext,
   seatOptions,
+  selectedSeat,
+  hasReturningFlight,
+  isDepartingFlightSelection,
+  departureDepartureDate,
+  returningDepartureDate,
 }) => {
   return (
     <div className="reservation-content">
       {/* Progress step header */}
       <div className="progress-step-header">
-        
         <div className="flight-information p-4">
-            
           <div className="flight-info-box">
-            
-            <div className="code">{flight.departingIata}
-            <div className="arrow-icon ms-4">
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M6 16H26M26 16L19 9M26 16L19 23" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <div className="code">
+              {flight.departingIata}
+              <div className="arrow-icon ms-4">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                  <path
+                    d="M6 16H26M26 16L19 9M26 16L19 23"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div className="location">{flight.departingAirportName}</div>
           </div>
-        </div>
-            <div className="location">{flight.departureAirportId}</div>
-          </div>
-       
+
           <div className="flight-info-box">
             <div className="code">{flight.arrivalIata}</div>
-            <div className="location">{flight.arrivalAirportId}</div>
+            <div className="location">{flight.arrivalAirportName}</div>
           </div>
         </div>
 
@@ -81,37 +94,58 @@ const ReservationPassengersSeatClass: React.FC<Props> = ({
           <div className="flight-info-divider">
             <div className="divider"></div>
           </div>
-          <div className="flight-info">
-            <div className="time-data">{flight.departureTime}</div>
-            <div className="direction">{flight.departingIata}</div>
+          <div
+            className={
+              'flight-info' + (isDepartingFlightSelection ? ' active' : '')
+            }
+          >
+            <div className="flight-info-inactive">
+              <div className="time-data">
+                {departureDepartureDate.replace('T', ' ')}
+              </div>
+              <div className="direction">Andata</div>
+            </div>
+            <div className="active-chevron"></div>
           </div>
           <div className="flight-info-divider">
             <div className="divider"></div>
           </div>
-          <div className="flight-info active">
-            <div className="flight-info-inactive">
-              <div className="time-data">{flight.arrivalTime}</div>
-              <div className="direction">{flight.arrivalIata}</div>
+          {hasReturningFlight && (
+            <div
+              className={
+                'flight-info' + (isDepartingFlightSelection ? '' : ' active')
+              }
+            >
+              <div className="flight-info-inactive">
+                <div className="time-data">
+                  {returningDepartureDate.replace('T', ' ')}
+                </div>
+                <div className="direction">Ritorno</div>
+              </div>
+              <div className="active-chevron"></div>
             </div>
-            <div className="active-chevron"></div>
-          </div>
+          )}
         </div>
       </div>
 
       {/* Feature lists */}
       <div className="feature-lists">
-        {seatOptions.map((option) => {
+        {seatOptions.map(option => {
           const isSelected = selectedClass === option.type;
           const isEconomy = option.type === SeatClass.ECONOMY;
-          
+
           return (
             <div
               key={option.type}
               className={`feature-list ${isEconomy ? 'economy' : 'business'} ${isSelected ? 'selected' : ''}`}
               onClick={() => onClassChange(option.type)}
             >
-              <img src={option.imageSrc} alt={option.title} className="seat-image" />
-              
+              <img
+                src={option.imageSrc}
+                alt={option.title}
+                className="seat-image"
+              />
+
               <div className="feature-list-content">
                 <div className="header-and-badge">
                   <div className="header">{option.title}</div>
@@ -131,8 +165,19 @@ const ReservationPassengersSeatClass: React.FC<Props> = ({
                       {isEconomy ? (
                         <div className="ellipse"></div>
                       ) : (
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                          <path d="M6 12L10 16L18 8" stroke="#5CD6C0" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <path
+                            d="M6 12L10 16L18 8"
+                            stroke="#5CD6C0"
+                            strokeWidth="4"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
                         </svg>
                       )}
                     </div>
@@ -158,13 +203,10 @@ const ReservationPassengersSeatClass: React.FC<Props> = ({
             </div>
             <div className="passenger-data">
               <div className="label">Posto selezionato</div>
-              <div className="name">{passenger.name}</div>
+              <div className="name">{selectedSeat}</div>
             </div>
           </div>
-          <div className="button-row">
-            <button className="btn-save" onClick={onSave}>
-              <span className="label">Salva e chiudi</span>
-            </button>
+          <div className="button-row d-flex justify-content-end">
             <button className="btn-next" onClick={onNext}>
               <span className="label">Prossimo</span>
             </button>
