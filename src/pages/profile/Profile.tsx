@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserData } from "../../services/userService";
+import { getUserData, updateUserData } from "../../services/userService";
 
 export interface User {
   id: string
@@ -40,9 +40,17 @@ const Profile: React.FC<ProfileProps> = () => {
     loadUserData();
   }, []);
 
-  const handleSave = () => {
-    console.log('Dati salvati:', formData);
-    setIsEditing(false);
+  const handleSave = async () => {
+    const newUser = await updateUserData(formData);
+    if (newUser) {
+      console.log('Dati salvati:', formData);
+      setFormData(newUser);
+      setUser(newUser);
+      setIsEditing(false);
+    } else {
+      alert("Error");
+    }
+
   };
 
   const handlePasswordChange = () => {
