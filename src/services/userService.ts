@@ -25,7 +25,8 @@ export const updateUserData = async (user: User) => {
     const response = await fetch(`${API_BASE_URL}/api/users/me`, {
       method: "PATCH",
       headers: new Headers({
-        'Authorization': `Bearer ${authService.getToken()}`
+        'Authorization': `Bearer ${authService.getToken()}`,
+        'Content-Type': 'application/json'
       }),
       body: JSON.stringify(user)
     });
