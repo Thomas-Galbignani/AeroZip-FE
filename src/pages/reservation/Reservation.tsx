@@ -65,7 +65,7 @@ const Reservation: React.FC<ReservationProps> = () => {
               setPassengers={setPassengers}
             ></ReservationPassengersInfo>
             {/* TODO rework info */}
-            <div>
+            <div className='d-flex ms-3 p-3 '>
               <SelectedFlights
                 departingFlight={departingFlight}
                 step={SelectedFlightsType.SEAT_SELECT}

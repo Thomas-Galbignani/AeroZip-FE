@@ -16,14 +16,14 @@ const SelectedFlightCard: React.FC<SelectedFlightCardProps> = ({ flight }) => {
   return (
     <div className="selected-flights__flights__card">
       <div className="row">
-        <div className="col-2">
+        <div className="col-xs-5">
           <img
             className="selected-flights__flights__card__logo"
             src={flight.companyAvatar}
             alt=""
           />
         </div>
-        <div className="col-6 d-flex flex-column">
+        <div className="col-xs-6 d-flex flex-column">
           <span className="selected-flights__flights__card__text">
             {flight.companyName}
           </span>
@@ -31,7 +31,7 @@ const SelectedFlightCard: React.FC<SelectedFlightCardProps> = ({ flight }) => {
             {flight.flightCode}
           </span>
         </div>
-        <div className="col-4 d-flex flex-column justify-content-between">
+        <div className="col-xs-4 d-flex flex-column justify-content-between">
           <span className="selected-flights__flights__card__text">
             {flight.flightTime}
           </span>
@@ -52,8 +52,8 @@ const SelectedFlightCard: React.FC<SelectedFlightCardProps> = ({ flight }) => {
             {flight.layover == LayoverType.DIRECT
               ? 'Diretto'
               : flight.layover == LayoverType.ONE_STOP
-              ? '1 scalo'
-              : '2 scali'}
+                ? '1 scalo'
+                : '2 scali'}
           </span>
         </div>
       </div>
