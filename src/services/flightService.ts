@@ -1,3 +1,5 @@
+import { API_BASE_URL } from "../constants";
+
 export type Flight = {
   id?: number;
   companyAvatar: string;
@@ -22,7 +24,7 @@ export const fetchFlights = async (
 ): Promise<Flight[]> => {
   try {
     const response = await fetch(
-      `http://localhost:8080/api/flights?departureIata=${departureIata}&arrivalIata=${arrivalIata}&date=${date}&passengers=${passengers}`
+      `${API_BASE_URL}/api/flights?departureIata=${departureIata}&arrivalIata=${arrivalIata}&date=${date}&passengers=${passengers}`
     );
 
     if (!response.ok) {

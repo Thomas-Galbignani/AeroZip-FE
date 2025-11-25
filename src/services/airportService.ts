@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '../constants';
 import type { Airport } from '../models/airport';
 
 export type AirportOption = {
@@ -12,7 +13,7 @@ export const fetchAirports = async (
     const response = await fetch(
       //`/mock/airports.json?query=${encodeURIComponent(query)}`
       // Quando passi al backend reale:
-      `http://localhost:8080/api/airports?search=${encodeURIComponent(query)}`
+      `${API_BASE_URL}/api/airports?search=${encodeURIComponent(query)}`
     );
 
     if (!response.ok) {
