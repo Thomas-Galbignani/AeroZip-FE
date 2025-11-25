@@ -1,4 +1,5 @@
-const API_BASE_URL = 'http://localhost:8080'; // TODO: Replace with your actual API URL
+import { API_BASE_URL } from "../constants";
+
 const TOKEN_KEY = 'aerozip_jwt';
 
 // Token management
