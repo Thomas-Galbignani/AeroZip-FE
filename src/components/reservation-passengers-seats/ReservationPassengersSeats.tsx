@@ -121,26 +121,32 @@ const ReservationPassengersSeats: React.FC<ReservationPassengersSeatsProps> = ({
   };
 
   return (
-    <div className="d-flex">
-      <SeatsAirplane
-        availableSeats={availableSeats}
-        selectedSeat={selectedSeat}
-        setSelectedSeat={setSelectedSeat}
-        selectedClass={selectedClass}
-      ></SeatsAirplane>
-      <ReservationPassengersSeatClass
-        flight={selectedFlight}
-        passenger={passengersInfo[passengerIndex]}
-        selectedClass={selectedClass}
-        onClassChange={handleClassChange}
-        onNext={handleNextClick}
-        seatOptions={seatOptions}
-        selectedSeat={selectedSeat}
-        hasReturningFlight={!!returningFlightInfo}
-        isDepartingFlightSelection={isDepartingFlightSelection}
-        departureDepartureDate={departingFlightInfo.departureTime}
-        returningDepartureDate={returningFlightInfo?.departureTime ?? ''}
-      ></ReservationPassengersSeatClass>
+    <div className="row">
+      <div className="col-12 col-md-6 col-lg-5">
+        <div className="d-flex justify-content-center w-100 overflow-auto p-2">
+          <SeatsAirplane
+            availableSeats={availableSeats}
+            selectedSeat={selectedSeat}
+            setSelectedSeat={setSelectedSeat}
+            selectedClass={selectedClass}
+          ></SeatsAirplane>
+        </div>
+      </div>
+      <div className="col-12 col-md-6 col-lg-7">
+        <ReservationPassengersSeatClass
+          flight={selectedFlight}
+          passenger={passengersInfo[passengerIndex]}
+          selectedClass={selectedClass}
+          onClassChange={handleClassChange}
+          onNext={handleNextClick}
+          seatOptions={seatOptions}
+          selectedSeat={selectedSeat}
+          hasReturningFlight={!!returningFlightInfo}
+          isDepartingFlightSelection={isDepartingFlightSelection}
+          departureDepartureDate={departingFlightInfo.departureTime}
+          returningDepartureDate={returningFlightInfo?.departureTime ?? ''}
+        ></ReservationPassengersSeatClass>
+      </div>
     </div>
   );
 };
