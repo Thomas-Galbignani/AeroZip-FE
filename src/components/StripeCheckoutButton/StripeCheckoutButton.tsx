@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { API_BASE_URL } from '../../constants';
+import { authService } from '../../services/authService';
 
 interface CheckoutButtonProps {
   reservationId: string;
@@ -18,14 +19,14 @@ const StripeCheckoutButton: React.FC<CheckoutButtonProps> = ({
     setLoading(true);
 
     try {
-      // Chiama il tuo backend per creare la sessione Stripe
+      // Preparazione Stripe
       const response = await fetch(
         `${API_BASE_URL}/api/stripe/create-checkout-session`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`, // se usi auth
+            Authorization: `Bearer ${authService.getToken()}`,
           },
           body: JSON.stringify({
             reservationId: reservationId,

@@ -5,7 +5,9 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100vh;
+  // height: 100vh;
+  padding-top: 100px;
+  padding-bottom: 200px;
 
   &__title {
     font-weight: 800;

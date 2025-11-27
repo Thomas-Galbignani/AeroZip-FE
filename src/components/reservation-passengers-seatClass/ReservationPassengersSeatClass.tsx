@@ -2,6 +2,7 @@ import './ReservationPassengersSeatClass.scss';
 import { SeatClass } from '../../models/seatClass';
 import type { Flight } from '../../services/flightService';
 import type { PassengerData } from '../../pages/reservation/Reservation';
+import StripeCheckoutButton from '../StripeCheckoutButton/StripeCheckoutButton';
 
 interface SeatOption {
   type: SeatClass;
@@ -16,6 +17,12 @@ export type FlightInfo = Flight & {
   departingAirportName: string;
   arrivalIata: string;
   arrivalAirportName: string;
+};
+
+export type CheckoutInfo = {
+  reservationId: string;
+  userEmail: string;
+  amount: number;
 };
 
 // interface FlightInfo {
@@ -46,6 +53,8 @@ interface Props {
   isDepartingFlightSelection: boolean;
   departureDepartureDate: string;
   returningDepartureDate: string;
+  showCheckout: boolean;
+  checkoutInfo: CheckoutInfo | null;
 }
 
 const ReservationPassengersSeatClass: React.FC<Props> = ({
@@ -60,6 +69,8 @@ const ReservationPassengersSeatClass: React.FC<Props> = ({
   isDepartingFlightSelection,
   departureDepartureDate,
   returningDepartureDate,
+  showCheckout,
+  checkoutInfo,
 }) => {
   return (
     <div className="reservation-content">
@@ -207,9 +218,18 @@ const ReservationPassengersSeatClass: React.FC<Props> = ({
             </div>
           </div>
           <div className="button-row d-flex justify-content-end">
-            <button className="btn-next" onClick={onNext}>
-              <span className="label">Prossimo</span>
-            </button>
+            {!showCheckout && (
+              <button className="btn-next" onClick={onNext}>
+                <span className="label">Prossimo</span>
+              </button>
+            )}
+            {showCheckout && (
+              <StripeCheckoutButton
+                reservationId={checkoutInfo?.reservationId ?? ''}
+                userEmail={checkoutInfo?.userEmail ?? ''}
+                amount={checkoutInfo?.amount ?? 0}
+              ></StripeCheckoutButton>
+            )}
           </div>
         </div>
       </div>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../../constants';
+import { authService } from '../../services/authService';
+import { reservationService } from '../../services/reservationService';
 
 const PaymentSuccess: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -18,11 +20,11 @@ const PaymentSuccess: React.FC = () => {
 
       try {
         const response = await fetch(
-          `${API_BASE_URL}/api/reservations/${reservationId}/checkout`,
+          `${API_BASE_URL}/reservations/${reservationId}/checkout`,
           {
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`,
+              Authorization: `Bearer ${authService.getToken()}`,
               'Content-Type': 'application/json',
             },
           }
@@ -30,6 +32,8 @@ const PaymentSuccess: React.FC = () => {
 
         if (response.ok) {
           setProcessing(false);
+          reservationService.removePendingReservation();
+          reservationService.removeReservation();
         } else {
           throw new Error('Errore nella finalizzazione');
         }
@@ -144,6 +148,8 @@ const PaymentSuccess: React.FC = () => {
       </h1>
       <p style={{ fontSize: '18px', color: '#666', marginBottom: '30px' }}>
         La tua prenotazione è stata confermata con successo.
+        <br />
+        Grazie per aver utilizzato AeroZip.
       </p>
 
       <div
@@ -156,7 +162,7 @@ const PaymentSuccess: React.FC = () => {
         }}
       >
         <p style={{ margin: '10px 0', fontSize: '16px' }}>
-          📧 Riceverai una email con i biglietti a breve
+          Riceverai una email con i biglietti a breve
         </p>
         <p style={{ margin: '10px 0', fontSize: '14px', color: '#666' }}>
           Controlla anche la cartella spam se non vedi l'email
@@ -171,34 +177,7 @@ const PaymentSuccess: React.FC = () => {
           flexWrap: 'wrap',
         }}
       >
-        <button
-          onClick={() => navigate('/my-reservations')}
-          style={{
-            padding: '12px 24px',
-            backgroundColor: '#4CAF50',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            fontWeight: 600,
-          }}
-        >
-          Vedi le mie prenotazioni
-        </button>
-        <button
-          onClick={() => navigate('/')}
-          style={{
-            padding: '12px 24px',
-            backgroundColor: '#007bff',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontSize: '16px',
-            fontWeight: 600,
-          }}
-        >
+        <button onClick={() => navigate('/')} className="aero-zip-button">
           Torna alla home
         </button>
       </div>
