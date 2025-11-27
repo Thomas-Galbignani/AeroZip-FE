@@ -65,8 +65,9 @@ interface SelectedFlightsProps {
   departingFlight?: Flight | null;
   returningFlight?: Flight | null;
   hasReturningFlight?: boolean;
-  step: SelectedFlightsType;
+  step?: SelectedFlightsType;
   onReservationClick: () => void;
+  passengersNumber: number;
 }
 
 const SelectedFlights: React.FC<SelectedFlightsProps> = ({
@@ -75,6 +76,7 @@ const SelectedFlights: React.FC<SelectedFlightsProps> = ({
   hasReturningFlight = false,
   step = SelectedFlightsType.START_RESERVATION,
   onReservationClick,
+  passengersNumber,
 }) => {
   const showInfoBox = hasReturningFlight
     ? !!departingFlight && !!returningFlight
@@ -85,6 +87,7 @@ const SelectedFlights: React.FC<SelectedFlightsProps> = ({
     if (!departingFlight) return totalPrice;
     totalPrice += departingFlight.totalPrice;
     if (!!returningFlight) totalPrice += returningFlight.totalPrice;
+    totalPrice = totalPrice * passengersNumber;
     return totalPrice / 100;
   };
 

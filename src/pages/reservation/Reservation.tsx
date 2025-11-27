@@ -38,8 +38,6 @@ const Reservation: React.FC<ReservationProps> = () => {
   useEffect(() => {
     const pendingReservationData = reservationService.getPendingReservation();
     if (pendingReservationData) {
-      //reservationService.removePendingReservation();
-
       setPassengerNumber(pendingReservationData.searchData.passengers);
       setDepartingFlight(pendingReservationData.departingFlight);
       setReturningFlight(pendingReservationData.returningFlight);
@@ -72,8 +70,11 @@ const Reservation: React.FC<ReservationProps> = () => {
             <div className="d-flex ms-3 p-3 ">
               <SelectedFlights
                 departingFlight={departingFlight}
+                returningFlight={returningFlight}
+                hasReturningFlight={!!returningFlight}
                 step={SelectedFlightsType.SEAT_SELECT}
                 onReservationClick={handlePassengerInfoClick}
+                passengersNumber={passengerNumbers}
               ></SelectedFlights>
             </div>
           </div>
