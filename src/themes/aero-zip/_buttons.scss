@@ -1,7 +1,7 @@
-@use "./variables/colors_variables" as colors_variables;
+@use './variables/colors_variables' as colors_variables;
 
 .aero-zip-button {
-  background-color: colors_variables.get-color("purple-blue");
+  background-color: colors_variables.get-color('purple-blue');
   padding: 0.75rem 1.25rem;
   border: 0;
   border-radius: 0.25rem;
@@ -9,18 +9,18 @@
   font-size: 1rem; // Merdium on default
   line-height: auto;
   letter-spacing: 0px;
-  color: colors_variables.get-color("grey-100");
+  color: colors_variables.get-color('grey-100');
 
   text-decoration: none;
 
   &:hover {
-    background-color: colors_variables.get-color("purple-dark");
+    background-color: colors_variables.get-color('purple-dark');
   }
 
   &:disabled {
     background-color: rgba(203, 212, 230, 0.3);
-    border: 0.063rem solid colors_variables.get-color("grey-400");
-    color: colors_variables.get-color("grey-400");
+    border: 0.063rem solid colors_variables.get-color('grey-400');
+    color: colors_variables.get-color('grey-400');
   }
 
   &--large {
@@ -42,18 +42,18 @@
 
   &__secondary {
     @extend .aero-zip-button;
-    border: 1px solid colors_variables.get-color("purple-blue");
-    background-color: colors_variables.get-color("true-white");
-    color: colors_variables.get-color("purple-blue");
+    border: 1px solid colors_variables.get-color('purple-blue');
+    background-color: colors_variables.get-color('true-white');
+    color: colors_variables.get-color('purple-blue');
 
     &:hover {
-      background-color: colors_variables.get-color("purple-extra-light");
+      background-color: colors_variables.get-color('purple-extra-light');
     }
 
     &:disabled {
-      background-color: colors_variables.get-color("true-white");
-      border: 1px solid colors_variables.get-color("grey-400");
-      color: colors_variables.get-color("grey-400");
+      background-color: colors_variables.get-color('true-white');
+      border: 1px solid colors_variables.get-color('grey-400');
+      color: colors_variables.get-color('grey-400');
     }
 
     &--large {
@@ -73,6 +73,73 @@
       font-size: 0.75rem;
     }
   }
+
+  // --- NUOVA VARIANTE: TURQUOISE ---
+  &__turquoise {
+    @extend .aero-zip-button;
+    background-color: colors_variables.get-color('turquoise');
+    color: colors_variables.get-color('true-white'); // Bianco per leggibilità
+
+    &:hover {
+      background-color: colors_variables.get-color('deep-green');
+    }
+
+    &:disabled {
+      background-color: rgba(203, 212, 230, 0.3);
+      border: 0.063rem solid colors_variables.get-color('grey-400');
+      color: colors_variables.get-color('grey-400');
+    }
+
+    &--large {
+      @extend .aero-zip-button__turquoise;
+      font-size: 1.125rem;
+    }
+    &--medium {
+      @extend .aero-zip-button__turquoise;
+      font-size: 1rem;
+    }
+    &--small {
+      @extend .aero-zip-button__turquoise;
+      font-size: 0.875rem;
+    }
+    &--extra-small {
+      @extend .aero-zip-button__turquoise;
+      font-size: 0.75rem;
+    }
+  }
+
+  &__red {
+    @extend .aero-zip-button;
+    background-color: colors_variables.get-color('red');
+    color: colors_variables.get-color('true-white');
+
+    &:hover {
+      background-color: colors_variables.get-color('dark-red');
+    }
+
+    &:disabled {
+      background-color: rgba(203, 212, 230, 0.3);
+      border: 0.063rem solid colors_variables.get-color('grey-400');
+      color: colors_variables.get-color('grey-400');
+    }
+
+    &--large {
+      @extend .aero-zip-button__red;
+      font-size: 1.125rem;
+    }
+    &--medium {
+      @extend .aero-zip-button__red;
+      font-size: 1rem;
+    }
+    &--small {
+      @extend .aero-zip-button__red;
+      font-size: 0.875rem;
+    }
+    &--extra-small {
+      @extend .aero-zip-button__red;
+      font-size: 0.75rem;
+    }
+  }
 }
 
 .areo-zip-link {
@@ -80,5 +147,5 @@
   line-height: 100%;
   letter-spacing: 0px;
   text-decoration: none;
-  color: colors_variables.get-color("grey-400");
+  color: colors_variables.get-color('grey-400');
 }

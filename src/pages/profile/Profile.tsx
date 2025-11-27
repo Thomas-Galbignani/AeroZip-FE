@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import { getUserData, updateUserData } from "../../services/userService";
+import { useEffect, useState } from 'react';
+import { getUserData, updateUserData } from '../../services/userService';
 
 export interface User {
-  id: string
+  id: string;
   name: string;
   surname: string;
   email: string;
   phone: string;
 }
 
-interface ProfileProps { }
+interface ProfileProps {}
 
 const Profile: React.FC<ProfileProps> = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -20,13 +20,11 @@ const Profile: React.FC<ProfileProps> = () => {
     name: '',
     surname: '',
     email: '',
-    phone: ''
+    phone: '',
   });
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
   const [user, setUser] = useState<User | null>(null);
-
 
   const loadUserData = async () => {
     const user = await getUserData();
@@ -34,7 +32,7 @@ const Profile: React.FC<ProfileProps> = () => {
       setUser(user);
       setFormData(user);
     }
-  }
+  };
 
   useEffect(() => {
     loadUserData();
@@ -48,9 +46,8 @@ const Profile: React.FC<ProfileProps> = () => {
       setUser(newUser);
       setIsEditing(false);
     } else {
-      alert("Error");
+      alert('Error');
     }
-
   };
 
   const handlePasswordChange = () => {
@@ -68,149 +65,213 @@ const Profile: React.FC<ProfileProps> = () => {
     console.log('Account eliminato');
     alert('Account eliminato');
   };
-
   if (isChangingPassword) {
     return (
-      <div style={{ maxWidth: '500px', margin: '50px auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
-        <h2>Modifica Password</h2>
+      <div className="container my-5">
+        <div
+          className="card mx-auto shadow-sm bg-purple-white border-grey-400"
+          style={{ maxWidth: '500px' }}
+        >
+          <div className="card-body">
+            <h2 className="text-purple-dark mb-4">Modifica Password</h2>
 
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Nuova Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-          />
-        </div>
+            <div className="mb-3">
+              <label className="form-label text-grey-900">
+                Nuova Password:
+              </label>
+              <input
+                type="password"
+                className="form-control border-grey-400 bg-purple-white-light"
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+              />
+            </div>
 
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Conferma Password:</label>
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-          />
-        </div>
+            <div className="mb-3">
+              <label className="form-label text-grey-900">
+                Conferma Password:
+              </label>
+              <input
+                type="password"
+                className="form-control border-grey-400 bg-purple-white-light"
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+              />
+            </div>
 
-        <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-          <button onClick={handlePasswordChange} style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-            Cambia Password
-          </button>
-          <button onClick={() => { setIsChangingPassword(false); setPassword(''); setConfirmPassword(''); }} style={{ padding: '10px 20px', backgroundColor: '#6c757d', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-            Annulla
-          </button>
+            <div className="d-grid d-md-flex gap-2 mt-3">
+              <button
+                className="aero-zip-button__turquoise aero-zip-button__turquoise--medium"
+                onClick={handlePasswordChange}
+              >
+                Cambia Password
+              </button>
+              <button
+                className="aero-zip-button__secondary aero-zip-button__secondary--medium"
+                onClick={() => {
+                  setIsChangingPassword(false);
+                  setPassword('');
+                  setConfirmPassword('');
+                }}
+              >
+                Annulla
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
-
   if (showDeleteConfirm) {
     return (
-      <div style={{ maxWidth: '500px', margin: '50px auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
-        <h2>Conferma Eliminazione</h2>
-        <p>Sei sicuro di voler eliminare il tuo account?</p>
-        <p style={{ color: 'red', fontWeight: 'bold' }}>Questa azione è irreversibile!</p>
-        <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-          <button onClick={handleDelete} style={{ padding: '10px 20px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-            Elimina Definitivamente
-          </button>
-          <button onClick={() => setShowDeleteConfirm(false)} style={{ padding: '10px 20px', backgroundColor: '#6c757d', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-            Annulla
-          </button>
+      <div className="container my-5">
+        <div
+          className="card mx-auto shadow-sm bg-purple-white border-grey-400"
+          style={{ maxWidth: '500px' }}
+        >
+          <div className="card-body">
+            <h2 className="text-purple-dark mb-3">Conferma Eliminazione</h2>
+            <p>Sei sicuro di voler eliminare il tuo account?</p>
+            <p className="text-red fw-bold">Questa azione è irreversibile!</p>
+            <div className="d-grid d-md-flex gap-2 mt-3">
+              <button
+                className="aero-zip-button__red aero-zip-button__red--medium"
+                onClick={handleDelete}
+              >
+                Elimina Definitivamente
+              </button>
+              <button
+                className="aero-zip-button__secondary aero-zip-button__secondary--medium"
+                onClick={() => setShowDeleteConfirm(false)}
+              >
+                Annulla
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
-
   if (isEditing) {
     return (
-      <div style={{ maxWidth: '500px', margin: '50px auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
-        <h2>Modifica Profilo</h2>
+      <div className="container my-5">
+        <div
+          className="card mx-auto shadow-sm bg-purple-white border-grey-400"
+          style={{ maxWidth: '500px' }}
+        >
+          <div className="card-body">
+            <h2 className="text-purple-dark mb-4">Modifica Profilo</h2>
 
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Nome:</label>
-          <input
-            type="text"
-            value={formData?.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-          />
-        </div>
+            <div className="mb-3">
+              <label className="form-label text-grey-900">Nome:</label>
+              <input
+                type="text"
+                className="form-control border-grey-400 bg-purple-white-light"
+                value={formData.name}
+                onChange={e =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
+              />
+            </div>
 
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Cognome:</label>
-          <input
-            type="text"
-            value={formData.surname}
-            onChange={(e) => setFormData({ ...formData, surname: e.target.value })}
-            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-          />
-        </div>
+            <div className="mb-3">
+              <label className="form-label text-grey-900">Cognome:</label>
+              <input
+                type="text"
+                className="form-control border-grey-400 bg-purple-white-light"
+                value={formData.surname}
+                onChange={e =>
+                  setFormData({ ...formData, surname: e.target.value })
+                }
+              />
+            </div>
 
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Email:</label>
-          <input
-            type="email"
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-          />
-        </div>
+            <div className="mb-3">
+              <label className="form-label text-grey-900">Email:</label>
+              <input
+                type="email"
+                className="form-control border-grey-400 bg-purple-white-light"
+                value={formData.email}
+                onChange={e =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
+            </div>
 
-        <div style={{ marginBottom: '15px' }}>
-          <label style={{ display: 'block', marginBottom: '5px' }}>Telefono:</label>
-          <input
-            type="tel"
-            value={formData.phone}
-            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-            style={{ width: '100%', padding: '8px', borderRadius: '4px', border: '1px solid #ccc' }}
-          />
-        </div>
+            <div className="mb-3">
+              <label className="form-label text-grey-900">Telefono:</label>
+              <input
+                type="tel"
+                className="form-control border-grey-400 bg-purple-white-light"
+                value={formData.phone}
+                onChange={e =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
+              />
+            </div>
 
-        <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-          <button onClick={handleSave} style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-            Salva
-          </button>
-          <button onClick={() => setIsEditing(false)} style={{ padding: '10px 20px', backgroundColor: '#6c757d', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-            Annulla
-          </button>
+            <div className="d-grid d-md-flex gap-2 mt-3">
+              <button
+                className="aero-zip-button aero-zip-button--medium"
+                onClick={handleSave}
+              >
+                Salva
+              </button>
+              <button
+                className="aero-zip-button__secondary aero-zip-button__secondary--medium"
+                onClick={() => setIsEditing(false)}
+              >
+                Annulla
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     );
   }
-
   return (
-    <div style={{ maxWidth: '500px', margin: '50px auto', padding: '20px', border: '1px solid #ddd', borderRadius: '8px' }}>
-      <h2>Il Mio Profilo</h2>
+    <div className="container my-5">
+      <div
+        className="card mx-auto shadow-sm bg-purple-white border-grey-400"
+        style={{ maxWidth: '500px' }}
+      >
+        <div className="card-body">
+          <h2 className="text-purple-dark mb-4">Il Mio Profilo</h2>
 
-      <div style={{ marginBottom: '15px' }}>
-        <strong>Nome:</strong> {user?.name}
-      </div>
+          <p>
+            <strong>Nome:</strong> {user?.name}
+          </p>
+          <p>
+            <strong>Cognome:</strong> {user?.surname}
+          </p>
+          <p>
+            <strong>Email:</strong> {user?.email}
+          </p>
+          <p>
+            <strong>Telefono:</strong> {user?.phone}
+          </p>
 
-      <div style={{ marginBottom: '15px' }}>
-        <strong>Cognome:</strong> {user?.surname}
-      </div>
-
-      <div style={{ marginBottom: '15px' }}>
-        <strong>Email:</strong> {user?.email}
-      </div>
-
-      <div style={{ marginBottom: '20px' }}>
-        <strong>Telefono:</strong> {user?.phone}
-      </div>
-
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <button onClick={() => setIsEditing(true)} style={{ padding: '10px 20px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-          Modifica
-        </button>
-        <button onClick={() => setIsChangingPassword(true)} style={{ padding: '10px 20px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-          Cambia Password
-        </button>
-        <button onClick={() => setShowDeleteConfirm(true)} style={{ padding: '10px 20px', backgroundColor: '#dc3545', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-          Elimina Account
-        </button>
+          <div className="d-grid d-md-flex gap-2 mt-3">
+            <button
+              className="aero-zip-button aero-zip-button--medium"
+              onClick={() => setIsEditing(true)}
+            >
+              Modifica
+            </button>
+            <button
+              className="aero-zip-button__turquoise aero-zip-button__turquoise--medium"
+              onClick={() => setIsChangingPassword(true)}
+            >
+              Cambia Password
+            </button>
+            <button
+              className="aero-zip-button__red aero-zip-button__red--medium"
+              onClick={() => setShowDeleteConfirm(true)}
+            >
+              Elimina Account
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
