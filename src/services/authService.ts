@@ -22,9 +22,9 @@ export interface LoginRequest {
 }
 
 export interface RegistrationRequest {
-  nome: string;
-  cognome: string;
-  cellulare: string;
+  name: string;
+  surname: string;
+  phone: string;
   email: string;
   password: string;
 }
@@ -53,6 +53,7 @@ const login = async (credentials: LoginRequest): Promise<AuthResponse> => {
 
   const data: AuthResponse = await response.json();
   setToken(data.token);
+  document.dispatchEvent(new CustomEvent('login'));
   return data;
 };
 
@@ -71,6 +72,7 @@ const register = async (
 
   const data: AuthResponse = await response.json();
   setToken(data.token);
+  document.dispatchEvent(new CustomEvent('login'));
   return data;
 };
 
@@ -98,4 +100,5 @@ export const authService = {
   getToken,
   getAuthHeaders,
   isAuthenticated,
+  removeToken
 };

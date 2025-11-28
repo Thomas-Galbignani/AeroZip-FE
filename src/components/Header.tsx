@@ -4,10 +4,21 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { authService } from '../services/authService';
+import { useEffect, useState } from 'react';
 
 interface HeaderProps {}
 
 const Header: React.FC<HeaderProps> = () => {
+  const [isAutenticated, setIsAutenticated] = useState<boolean>(
+    authService.isAuthenticated()
+  );
+
+  useEffect(() => {
+    document.addEventListener('login', () => {
+      setIsAutenticated(authService.isAuthenticated());
+    });
+  }, []);
+
   return (
     <Navbar className="bg-white" expand={'sm'}>
       <Container>
@@ -31,7 +42,7 @@ const Header: React.FC<HeaderProps> = () => {
               <NavLink to="/" className="areo-zip-link p-2">
                 Voli
               </NavLink>
-              {!authService.isAuthenticated() && (
+              {!isAutenticated && (
                 <>
                   <NavLink to="/login" className="areo-zip-link p-2">
                     Accedi
@@ -41,7 +52,7 @@ const Header: React.FC<HeaderProps> = () => {
                   </NavLink>
                 </>
               )}
-              {authService.isAuthenticated() && (
+              {isAutenticated && (
                 <NavLink to="/profile" className="aero-zip-button">
                   Profilo
                 </NavLink>

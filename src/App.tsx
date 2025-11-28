@@ -6,6 +6,8 @@ import Login from './pages/login/Login';
 import Registration from './pages/registration/Registration';
 import Reservation from './pages/reservation/Reservation';
 import Profile from './pages/profile/Profile';
+import PaymentSuccess from './pages/PaymentSucces/PaymentSucces';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -19,7 +21,9 @@ function App() {
           <Route path="/register" element={<Registration />} />
           <Route path="/reservation" element={<Reservation />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
         </Routes>
+        <Footer></Footer>
       </BrowserRouter>
     </>
   );

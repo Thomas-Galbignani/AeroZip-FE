@@ -12,7 +12,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { authService } from '../../services/authService';
 import { reservationService } from '../../services/reservationService';
 
-interface RegistrationProps {}
+interface RegistrationProps { }
 
 const Registration: React.FC<RegistrationProps> = () => {
   const [nome, setNome] = useState('');
@@ -28,7 +28,7 @@ const Registration: React.FC<RegistrationProps> = () => {
     setError('');
 
     try {
-      await authService.register({ nome, cognome, cellulare, email, password });
+      await authService.register({ name: nome, surname: cognome, phone: cellulare, email, password });
       if (reservationService.getPendingReservation() != null) {
         navigate('/reservation');
       } else {

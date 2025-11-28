@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import SearchFlights, {
   type SearchFlightsFormData,
 } from '../../components/search-flights/SearchFlights';
@@ -47,9 +47,21 @@ const Home: React.FC<HomeProps> = () => {
     }
   };
 
-  const onFlightSelection = (flight: Flight) => {
+  const onFlightSelection = async (flight: Flight) => {
     if (!selectedDepartingFlight || !hasReturningFlight) {
       setSelectedDepartingFlight(flight);
+      setFlights([]);
+      if (flightSearchData) {
+        const departureAirport = flightSearchData.departureAirport?.value;
+        const arrivalAirport = flightSearchData.arrivalAirport?.value;
+        fetchFlights(
+          arrivalAirport ?? '',
+          departureAirport ?? '',
+          flightSearchData.departureDate,
+          flightSearchData.passengers
+        ).then(flights => setFlights(flights));
+        console.log('Chiedo voli di ritorno');
+      }
     } else {
       setSelectedReturningFlight(flight);
     }
@@ -106,6 +118,7 @@ const Home: React.FC<HomeProps> = () => {
                 returningFlight={selectedReturningFlight}
                 hasReturningFlight={hasReturningFlight}
                 onReservationClick={handleReservationClick}
+                passengersNumber={flightSearchData?.passengers ?? 1}
               />
             </div>
           )}
