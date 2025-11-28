@@ -72,6 +72,7 @@ const register = async (
 
   const data: AuthResponse = await response.json();
   setToken(data.token);
+  document.dispatchEvent(new CustomEvent('login'));
   return data;
 };
 
