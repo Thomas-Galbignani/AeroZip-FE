@@ -5,6 +5,8 @@ import {
   getUserData,
   updateUserData,
 } from '../../services/userService';
+import { authService } from '../../services/authService';
+import { useNavigate } from 'react-router-dom';
 
 export interface User {
   id: string;
@@ -32,12 +34,20 @@ const Profile: React.FC<ProfileProps> = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [user, setUser] = useState<User | null>(null);
 
+  const navigate = useNavigate();
+
   const loadUserData = async () => {
     const user = await getUserData();
     if (user) {
       setUser(user);
       setFormData(user);
     }
+  };
+
+  const onLogoutClick = () => {
+    authService.removeToken();
+    document.dispatchEvent(new CustomEvent('login'));
+    navigate('/');
   };
 
   useEffect(() => {
@@ -74,9 +84,11 @@ const Profile: React.FC<ProfileProps> = () => {
 
   const handleDelete = async () => {
     if (await deleteUser()) {
-      console.log('Account eliminato');
+      authService.removeToken();
       document.dispatchEvent(new CustomEvent('login'));
+      console.log('Account eliminato');
       alert('Account eliminato');
+      navigate('/');
     }
   };
 
@@ -291,6 +303,14 @@ const Profile: React.FC<ProfileProps> = () => {
             >
               Cambia Password
             </button>
+            <button
+              className="aero-zip-button__secondary--medium"
+              onClick={onLogoutClick}
+            >
+              Logout
+            </button>
+          </div>
+          <div className="d-grid d-md-flex gap-2 mt-2">
             <button
               className="aero-zip-button__red aero-zip-button__red--medium"
               onClick={() => setShowDeleteConfirm(true)}
