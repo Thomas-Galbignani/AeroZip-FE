@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
-import { getUserData, updateUserData } from '../../services/userService';
+import {
+  changeUserPassword,
+  deleteUser,
+  getUserData,
+  updateUserData,
+} from '../../services/userService';
 
 export interface User {
   id: string;
@@ -22,6 +27,7 @@ const Profile: React.FC<ProfileProps> = () => {
     email: '',
     phone: '',
   });
+  const [oldPassword, setOldPassword] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [user, setUser] = useState<User | null>(null);
@@ -50,21 +56,30 @@ const Profile: React.FC<ProfileProps> = () => {
     }
   };
 
-  const handlePasswordChange = () => {
+  const handlePasswordChange = async () => {
     if (password !== confirmPassword) {
       alert('Le password non corrispondono!');
       return;
     }
-    console.log('Password modificata');
-    setIsChangingPassword(false);
-    setPassword('');
-    setConfirmPassword('');
+
+    if (await changeUserPassword(oldPassword, password)) {
+      console.log('Password modificata');
+      alert('Password modificata con successo');
+      setIsChangingPassword(false);
+      setOldPassword('');
+      setPassword('');
+      setConfirmPassword('');
+    }
   };
 
-  const handleDelete = () => {
-    console.log('Account eliminato');
-    alert('Account eliminato');
+  const handleDelete = async () => {
+    if (await deleteUser()) {
+      console.log('Account eliminato');
+      document.dispatchEvent(new CustomEvent('login'));
+      alert('Account eliminato');
+    }
   };
+
   if (isChangingPassword) {
     return (
       <div className="container my-5">
@@ -74,6 +89,18 @@ const Profile: React.FC<ProfileProps> = () => {
         >
           <div className="card-body">
             <h2 className="text-purple-dark mb-4">Modifica Password</h2>
+
+            <div className="mb-3">
+              <label className="form-label text-grey-900">
+                Vecchia Password:
+              </label>
+              <input
+                type="password"
+                className="form-control border-grey-400 bg-purple-white-light"
+                value={oldPassword}
+                onChange={e => setOldPassword(e.target.value)}
+              />
+            </div>
 
             <div className="mb-3">
               <label className="form-label text-grey-900">

@@ -40,3 +40,45 @@ export const updateUserData = async (user: User) => {
     return null;
   }
 }
+
+export const changeUserPassword = async (oldPassword: string, newPassword: string): Promise<boolean> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/users/me/password`, {
+      method: "PUT",
+      headers: new Headers({
+        'Authorization': `Bearer ${authService.getToken()}`,
+        'Content-Type': 'application/json'
+      }),
+      body: JSON.stringify({
+        oldPassword,
+        newPassword
+      })
+    });
+    if (!response.ok) {
+      console.error(`HTTP error! status: ${response.status}`);
+    }
+    return response.ok;
+  } catch (error) {
+    console.error('Errore nel caricamento dell utente:', error);
+    return false;
+  }
+}
+
+export const deleteUser = async () => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/api/users/me`, {
+      method: "DELETE",
+      headers: new Headers({
+        'Authorization': `Bearer ${authService.getToken()}`,
+        'Content-Type': 'application/json'
+      })
+    });
+    if (!response.ok) {
+      console.error(`HTTP error! status: ${response.status}`);
+    }
+    return response.ok;
+  } catch (error) {
+    console.error('Errore nel caricamento dell utente:', error);
+    return null;
+  }
+}
